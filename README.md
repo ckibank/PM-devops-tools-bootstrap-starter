@@ -3,18 +3,22 @@
 DevOps essentials tools: Nexus for artifact management, SonarQube for code quality, Jira for project tracking, and Jenkins for continuous integration and automation.
 
 ## To begin
-- Create a Github repo without readme.md
-- Create codespaces on main
-```
-git remote add starter https://github.com/ckechios/devops-tools-starter.git 
-
-git fetch starter 
-
-git merge starter/main --allow-unrelated-histories 
-
-git remote remove starter 
-
-```
+- Create a Github repo with readme.md
+- From Codespaces > Create codespaces > choose above repo > select 4 core/16GB RAM create codespace.
+- Open codespace in Browser
+  - Either Option 1 : In Terminal
+  ```
+  git clone https://github.com/ckechios/devops-tools-bootstrap-starter.git
+  ```
+    - In Codespaces explorer > Drag all from the directory devops-tools-bootstrap-starter to root
+    - Select directory devops-tools-bootstrap-starter > Delete directory
+  - Or Option 2 : In Terminal
+  ```
+  git remote add starter https://github.com/ckechios/devops-tools-bootstrap-starter.git
+  git fetch starter 
+  git merge starter/main --allow-unrelated-histories 
+  git remote remove starter 
+  ```
 
 ## Docker
 - run tools with docker compose up -d
