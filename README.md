@@ -10,6 +10,7 @@ DevOps essentials tools: Nexus for artifact management, SonarQube for code quali
   ```
   git clone https://github.com/ckechios/devops-tools-bootstrap-starter.git
   ```
+  - In Codespaces : File Explorer
     - In Codespaces explorer > Drag all from the directory devops-tools-bootstrap-starter to root
     - Select directory devops-tools-bootstrap-starter > Delete directory
   - Or Option 2 : In Terminal
