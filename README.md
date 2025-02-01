@@ -42,6 +42,11 @@ docker exec -it [containerid] bash
 - Create project
 - Show Epic, Story, Task
 - Show Apps > Zephyr
+- Jira API key
+  - Jira Proflie > manage Account : Security
+    - API tokens : Create and manage API tokens
+    - Create API token - Create token name: jira-jenkins
+    - copy and paste in .creds file
 
 ## Maven
 - Maven commands
@@ -133,6 +138,9 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - SonarQube Scanner
   - JIRA (just Jira plugin - need to restart server - need to restart docker)
 - Setup credentials
+  - jira-jenkins : User Name and Password (where pass is key, id is: jira-jenkins)
+  - sonar-scan : Secret text
+  - nexus-jenkins : User Name and Password
 - Setup Tools
   - Maven as M3
   - Jira - with site details and credentials
