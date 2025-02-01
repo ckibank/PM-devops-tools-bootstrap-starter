@@ -2,7 +2,12 @@
 
 DevOps essentials tools: Nexus for artifact management, SonarQube for code quality, Jira for project tracking, and Jenkins for continuous integration and automation.
 
-## To begin
+## Jira 
+- Login / Signup
+  - [https://id.atlassian.com/login]
+- Create
+  - Project
+## GitHub codespaces
 - Create a Github repo with readme.md
 - From Codespaces > Create codespaces > choose above repo > select 4 core/16GB RAM create codespace.
 - Open codespace in Browser
