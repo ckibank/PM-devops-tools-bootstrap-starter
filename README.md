@@ -170,6 +170,17 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
       }
     }
     ```
+
+- Declare Environment after tools { maven 'M3' }
+- ```
+  environment {
+      pom = readMavenPom(file: 'calculator/pom.xml')
+      artifactId = pom.getArtifactId()
+      version = pom.getVersion()
+      name = pom.getName()
+      groupId = pom.getGroupId()
+  }
+  ```
 - Environment variable Check stage
   - ```
     stage('Environment details') {
