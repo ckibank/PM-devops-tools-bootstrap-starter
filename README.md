@@ -52,7 +52,7 @@ mvn deploy package   # For Nexus deployment
 
 ```
 
-## Nexus setup for local development
+## Nexus setup for local development and pushing to repo
 - Port is 8081 : Make port public
 - To get nexus password
   - > docker exec -it [nexus-conatiner-id] cat [get filename from login screen]
@@ -89,6 +89,8 @@ mvn deploy package   # For Nexus deployment
       </snapshotRepository>
   </distributionManagement>
     ```
+  - Go into calculator-module - build and push to Nexus repo
+    - mvn deploy package - Ensure ~/.maven/current/conf/settings.xml has the correct credentials
 
 ## scanning with sonar locally
 - Port is 9000 : Make port Public
@@ -106,6 +108,7 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
 - Generate SonarQube Token
   - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - use same name in jenkins
     - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
+- mention how -Dsona.coverage is for not covering test cases - else sonar will fail
 
 ## Nexus - create artifact repository
 - Setup maven repository
@@ -129,8 +132,10 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
     - Pipeline Utility Steps
   - SonarQube Scanner
   - JIRA (just Jira plugin - need to restart server - need to restart docker)
-- Setup Tools
 - Setup credentials
+- Setup Tools
+  - Maven as M3
+  - Jira - with site details and credentials
 
 ## Jenkins stages
 - MVN build stage
@@ -144,6 +149,25 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
       }
     }
     ```
+- Environment variable Check stage
+  - ```
+    stage('Environment details') {
+      steps {
+        dir('calculator') {
+          script {
+            echo "Version: ${version}"
+            echo "Group ID: ${groupId}"
+            echo "Artifact ID: ${artifactId}"
+          }
+        }
+      }
+    }
+    ```
+  - #### NOTES : On Environment variable check pipeline
+    - Build fails because of variable approval
+    - Manage Jenkins > In-process Script Approval > Approve
+    - **Keep approving for each variable** like group id, artifact id, version, name
+    - 
 - Sonar analysis stage
   - ```
     stage('SonarQube Analysis...') {
@@ -159,6 +183,11 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
     }
     ```
 - Push to Nexus Snapshot stage
+  - Before pasting the script learn how to get the details
+  - Click on Pipeline sample - Pipeline Project page
+    - sample step of nexusArtifactUploader
+    - enter details from pom.xml and nexus repo
+    - Generate PIpeline Script
   - ```
     stage('Send to Nexus snapshot rep') {
         steps {
@@ -185,11 +214,16 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
         }
     }    
     ```
+  - #### NOTES : On Nexus pipeline
+    - Build fails because of variable approval
+    - Manage Jenkins > In-process Script Approval > Approve
+    - **Keep approving for each variable** like group id, artifact id, version, name
+
 - JIRA update stage
   - ```
     stage('JiraUpdate') {
         steps {
-            jiraComment body: "Sonar Passed & pushed to Nexus (Job: ${env.JOB_NAME}, Build: ${env.BUILD_NUMBER})", issueKey: 'RJNSA-5'
+            jiraComment body: "Sonar Passed & pushed to Nexus (Job: ${env.JOB_NAME}, Build: ${env.BUILD_NUMBER})", issueKey: 'your_issue_key'
         }
     }
     ```
