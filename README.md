@@ -141,9 +141,21 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - jira-jenkins : User Name and Password (where pass is key, user is email, id is: jira-jenkins)
   - sonar-scan : Secret text
   - nexus-jenkins : User Name and Password
-- Setup Tools
-  - Maven as M3
-  - Jira - with site details and credentials
+- Setup Tools :
+  - Manage Jenkins
+    - Manage Jenkins > System
+      - SonarQube servers
+        - Add SonarQube
+          - Name: sonarserver
+          - URL: https://GITHUB_URL-9000.app.github.dev
+          - server authentication token
+      - Jira : click + Add
+        - URL : https://YOUR_DOMAIN.atlassian.net/
+        - CREDENTIALS : jira-jenkins
+    - Manage Jenkins > Tools
+      - Add Maven
+        - Name M3
+        - version 3.9.9
 
 ## Jenkins stages
 - MVN build stage
