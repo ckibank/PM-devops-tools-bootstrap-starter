@@ -138,7 +138,7 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - SonarQube Scanner
   - JIRA (just Jira plugin - need to restart server - need to restart docker)
 - Setup credentials
-  - jira-jenkins : User Name and Password (where pass is key, id is: jira-jenkins)
+  - jira-jenkins : User Name and Password (where pass is key, user is email, id is: jira-jenkins)
   - sonar-scan : Secret text
   - nexus-jenkins : User Name and Password
 - Setup Tools
