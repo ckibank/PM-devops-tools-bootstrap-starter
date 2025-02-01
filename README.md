@@ -52,7 +52,7 @@ mvn deploy package   # For Nexus deployment
 
 ```
 
-## Nexus
+## Nexus setup for local development
 - Port is 8081 : Make port public
 - To get nexus password
   - > docker exec -it [nexus-conatiner-id] cat [get filename from login screen]
@@ -76,7 +76,7 @@ with code below
 </server>
 ```
 
-## scanning with sonar
+## scanning with sonar locally
 - Port is 9000 : Make port Public
 - initial login credentials, admin : pass
 ```
@@ -98,7 +98,21 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarqube_url-9000.app.git
   - SonarQube Scanner
   - JIRA (just Jira plugin - need to restart server - need to restart docker)
 
-## Jira 
+## Jenkins stages
+- MVN build stage
+  - ```
+    stage('Build') {
+      steps {
+        dir('calculator') {
+          sh 'cat src/main/java/com/echios/App.java '
+          sh 'mvn clean install'
+        }
+      }
+    }
+    ```
+- 
+
+## Jira API
 - Test connection
 ```
   curl -X GET -u <email>:<token> -H "Content-Type: application/json" -H "Accept: application/json" http://[yourcloud].atlassian.net/rest/api/2/issue/[ISSUE-NUM]
