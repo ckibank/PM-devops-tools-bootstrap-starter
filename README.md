@@ -145,6 +145,7 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - Manage Jenkins
     - Manage Jenkins > System
       - SonarQube servers
+        - Environment Varaibles MUST be checked
         - Add SonarQube
           - Name: sonarserver
           - URL: https://GITHUB_URL-9000.app.github.dev
