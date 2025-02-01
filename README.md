@@ -59,22 +59,36 @@ mvn deploy package   # For Nexus deployment
 - Direct uplaod using mvn update
 - Set username and pass for nexus repo
 - This should match <distributionManagement> <repository> <id> in POM
-> code ~/.maven/current/conf/settings.xml
-with code below
-```
-<!-- between the <servers> tag -->
-<server>
-  <id>nexus-snapshots</id>
-  <username>admin</username>
-  <password>pass</password>
-</server>
-
-<server>
-  <id>nexus-releases</id>
-  <username>admin</username>
-  <password>pass</password>
-</server>
-```
+- > code ~/.maven/current/conf/settings.xml
+  - with code below
+  - ```
+    <!-- between the <servers> tag -->
+    <server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>pass</password>
+    </server>
+    
+    <server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>pass</password>
+    </server>
+    ```
+  - Check pom.xml update the <distributionManagement> section
+  - ```
+  <distributionManagement>
+      <repository>
+          <id>nexus-releases</id>   <!-- must correspond with ~/.maven/current/conf/settings.xml id -->
+          <!-- nexus url for artifact/snapshot repo -->
+          <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echart/</url>
+      </repository>
+      <snapshotRepository>
+          <id>nexus-snapshots</id>
+          <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echop/</url>
+      </snapshotRepository>
+  </distributionManagement>
+    ```
 
 ## scanning with sonar locally
 - Port is 9000 : Make port Public
@@ -85,10 +99,28 @@ export SONAR_TOKEN=YOUR_SONAR_TOKEN
 
 export SONAR_TOKEN=squ_[lotsofnumbers]
 
-mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarqube_url-9000.app.github.dev -Dsonar.coverage.exclusions=**/*
+mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-9000.app.github.dev -Dsonar.coverage.exclusions=**/*
 ```
 
-## Jenkins
+## SonarQube setup
+- Generate SonarQube Token
+  - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - use same name in jenkins
+    - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
+
+## Nexus - create artifact repository
+- Setup maven repository
+  - Artifact
+  - Snapshot
+- Deploy manually using Maven
+  - mvn deploy package
+
+## Jira API
+- Test connection
+```
+  curl -X GET -u <email>:<token> -H "Content-Type: application/json" -H "Accept: application/json" http://[yourcloud].atlassian.net/rest/api/2/issue/[ISSUE-NUM]
+```
+
+## Jenkins setup
 - initial password 
   - > docker logs [jenkins container id]
 - Plugins
@@ -97,6 +129,8 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarqube_url-9000.app.git
     - Pipeline Utility Steps
   - SonarQube Scanner
   - JIRA (just Jira plugin - need to restart server - need to restart docker)
+- Setup Tools
+- Setup credentials
 
 ## Jenkins stages
 - MVN build stage
@@ -110,10 +144,53 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarqube_url-9000.app.git
       }
     }
     ```
-- 
+- Sonar analysis stage
+  - ```
+    stage('SonarQube Analysis...') {
+        steps {
+            dir('calculator') {
+          script {
+            withSonarQubeEnv(credentialsId: 'sonar-scan') {
+              sh 'mvn clean package sonar:sonar -Dsonar.coverage.exclusions=**/*'
+            }
+          }
+            }
+        }
+    }
+    ```
+- Push to Nexus Snapshot stage
+  - ```
+    stage('Send to Nexus snapshot rep') {
+        steps {
+            dir('calculator') {
+              echo 'Nexus upload'
+              nexusArtifactUploader(
+                credentialsId: 'nexus-jenkins',
+                groupId: "${groupId}",
+                nexusUrl: 'YOURGITHUB_NEXUS_URL-8081.app.github.dev',
+                nexusVersion: 'nexus3',
+                protocol: 'https',
+                repository: 'echop',
+                version: "${version}",
+                artifacts: [
+                    [
+                        artifactId: "${artifactId}",
+                        classifier: '',
+                        file: "target/${artifactId}-${version}.jar",
+                        type: 'jar'
+                    ]
+                ]
+              )
+            }
+        }
+    }    
+    ```
+- JIRA update stage
+  - ```
+    stage('JiraUpdate') {
+        steps {
+            jiraComment body: "Sonar Passed & pushed to Nexus (Job: ${env.JOB_NAME}, Build: ${env.BUILD_NUMBER})", issueKey: 'RJNSA-5'
+        }
+    }
+    ```
 
-## Jira API
-- Test connection
-```
-  curl -X GET -u <email>:<token> -H "Content-Type: application/json" -H "Accept: application/json" http://[yourcloud].atlassian.net/rest/api/2/issue/[ISSUE-NUM]
-```
