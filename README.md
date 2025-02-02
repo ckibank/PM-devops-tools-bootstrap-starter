@@ -126,7 +126,7 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
 
 ## SonarQube setup
 - Generate SonarQube Token
-  - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - use same name in jenkins
+  - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - name: sonar-scan
     - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
 - mention how -Dsona.coverage is for not covering test cases - else sonar will fail
 
