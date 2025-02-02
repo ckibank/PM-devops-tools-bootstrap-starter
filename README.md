@@ -112,6 +112,12 @@ mvn deploy package   # For Nexus deployment
   - Go into calculator-module - build and push to Nexus repo
     - mvn deploy package - Ensure ~/.maven/current/conf/settings.xml has the correct credentials
 
+## SonarQube setup
+- Generate SonarQube Token
+  - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - name: sonar-scan
+    - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
+- mention how -Dsona.coverage is for not covering test cases - else sonar will fail
+
 ## scanning with sonar locally
 - Port is 9000 : Make port Public
 - initial login credentials, admin : pass
@@ -123,12 +129,6 @@ export SONAR_TOKEN=squ_[randomcharacters]
 
 mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-9000.app.github.dev -Dsonar.coverage.exclusions=**/*
 ```
-
-## SonarQube setup
-- Generate SonarQube Token
-  - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - name: sonar-scan
-    - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
-- mention how -Dsona.coverage is for not covering test cases - else sonar will fail
 
 ## Jira API
 - Test connection
