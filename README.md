@@ -68,6 +68,13 @@ mvn deploy package   # For Nexus deployment
 - Port is 8081 : Make port public
 - To get nexus password
   - > docker exec -it [nexus-conatiner-id] cat [get filename from login screen]
+## Nexus - create artifact repository
+- Setup maven repository
+  - Release - name= echart
+  - Snapshot - name= echop
+    - Allow redeploy
+- Deploy manually using Maven
+  - mvn deploy package
 - Direct uplaod using mvn update
 - Set username and pass for nexus repo
 - This should match <distributionManagement> <repository> <id> in POM
@@ -122,13 +129,6 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - sonarqube UI - My Account > Security > Generate Token : User Token : Generate - use same name in jenkins
     - SonarQube key looks like this: squ_b64682b7e2569ac6fe6edf05cda81abc59d8b846
 - mention how -Dsona.coverage is for not covering test cases - else sonar will fail
-
-## Nexus - create artifact repository
-- Setup maven repository
-  - Artifact
-  - Snapshot
-- Deploy manually using Maven
-  - mvn deploy package
 
 ## Jira API
 - Test connection
