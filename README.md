@@ -88,18 +88,19 @@ mvn deploy package   # For Nexus deployment
     </server>
     ```
   - Check pom.xml update the <distributionManagement> section
-  - ```
-  <distributionManagement>
-      <repository>
-          <id>nexus-releases</id>   <!-- must correspond with ~/.maven/current/conf/settings.xml id -->
-          <!-- nexus url for artifact/snapshot repo -->
-          <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echart/</url>
-      </repository>
-      <snapshotRepository>
-          <id>nexus-snapshots</id>
-          <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echop/</url>
-      </snapshotRepository>
-  </distributionManagement>
+  -
+    ```
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>   <!-- must correspond with ~/.maven/current/conf/settings.xml id -->
+            <!-- nexus url for artifact/snapshot repo -->
+            <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echart/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://YOURGITHUB_NEXUS_URL-8081.app.github.dev/repository/echop/</url>
+        </snapshotRepository>
+    </distributionManagement>
     ```
   - Go into calculator-module - build and push to Nexus repo
     - mvn deploy package - Ensure ~/.maven/current/conf/settings.xml has the correct credentials
