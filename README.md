@@ -11,6 +11,9 @@ DevOps essentials tools: Nexus for artifact management, SonarQube for code quali
   - Project > Setttings > Permissions
     - Actions > Edit permissions
     - Search "Delete Issues" > Update > Any Logged in User
+  - Start Docker services in codespaces
+  - Create
+    - Project and issues
 ## GitHub codespaces
 - Create a Github repo with readme.md
 - From Codespaces > Create codespaces > choose above repo > select 4 core/16GB RAM create codespace.
