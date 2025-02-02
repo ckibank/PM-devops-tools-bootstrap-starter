@@ -119,7 +119,7 @@ mvn deploy package   # For Nexus deployment
 export SONAR_TOKEN=YOUR_SONAR_TOKEN
 #sonar_token set in env like below
 
-export SONAR_TOKEN=squ_[lotsofnumbers]
+export SONAR_TOKEN=squ_[randomcharacters]
 
 mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-9000.app.github.dev -Dsonar.coverage.exclusions=**/*
 ```
