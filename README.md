@@ -145,6 +145,10 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
   - > or check inside container
      - > docker exec -it jenkins bash
      - > cat /var/jenkins_home/secrets/initialAdminPassword
+    - or
+    - ```
+      docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+      ``` 
 - Plugins
   - nexus plugin :
     - Nexus Artifact Uploader Version 2.14
