@@ -131,6 +131,9 @@ mvn clean verify sonar:sonar -Dsonar.host.url=https://YOUR_GITHUB_SONARQUBE_URL-
 ```
 
 ## Jira API
+- Set up API
+  - Profile Picture > Manage account : Security > API Tokens > Create and manage API tokens
+  - jira-jenkins : User Name and Password (where pass is key, user is email, id is: jira-jenkins)
 - Test connection
 ```
   curl -X GET -u <email>:<token> -H "Content-Type: application/json" -H "Accept: application/json" http://[yourcloud].atlassian.net/rest/api/2/issue/[ISSUE-NUM]
