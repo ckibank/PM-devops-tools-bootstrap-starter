@@ -2,6 +2,7 @@ version: '3'
 services:
 
   jenkins:
+    container_name: jenkins
     image: jenkins/jenkins:lts
     ports:
       - "8080:8080"
@@ -12,6 +13,7 @@ services:
     user: root
 
   sonarqube:
+    container_name: sonar
     image: sonarqube:latest
     ports:
       - "9000:9000"
@@ -29,6 +31,7 @@ services:
       - ci_network
 
   nexus:
+    container_name: nexus
     image: sonatype/nexus3
     environment:
       - JAVA_OPTS="-Dnexus.repository.upload.maxSize=500MB"
