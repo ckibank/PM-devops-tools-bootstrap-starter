@@ -7,6 +7,10 @@ DevOps essentials tools: Nexus for artifact management, SonarQube for code quali
   - [https://id.atlassian.com/login]
 - Create
   - Project
+- Permission to delete issue
+  - Project > Setttings > Permissions
+    - Actions > Edit permissions
+    - Search "Delete Issues" > Update > Any Logged in User
 ## GitHub codespaces
 - Create a Github repo with readme.md
 - From Codespaces > Create codespaces > choose above repo > select 4 core/16GB RAM create codespace.
