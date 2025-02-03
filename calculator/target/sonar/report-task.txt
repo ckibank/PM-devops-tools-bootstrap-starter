@@ -1,0 +1,6 @@
+projectKey=com.echios:calculator
+serverUrl=https://obscure-parakeet-9xx46vrxqwwfg45-9000.app.github.dev
+serverVersion=25.1.0.102122
+dashboardUrl=https://obscure-parakeet-9xx46vrxqwwfg45-9000.app.github.dev/dashboard?id=com.echios%3Acalculator
+ceTaskId=3ec27a89-2e4e-4911-acc9-4ca4b9bf5c24
+ceTaskUrl=https://obscure-parakeet-9xx46vrxqwwfg45-9000.app.github.dev/api/ce/task?id=3ec27a89-2e4e-4911-acc9-4ca4b9bf5c24
