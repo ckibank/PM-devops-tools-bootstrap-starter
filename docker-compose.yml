@@ -33,6 +33,7 @@ services:
   nexus:
     container_name: nexus
     image: sonatype/nexus3
+    # image: sonatypecommunity/nexus3:3.74.0-java17   # for arm64 chips
     environment:
       - JAVA_OPTS="-Dnexus.repository.upload.maxSize=500MB"
     ports:
